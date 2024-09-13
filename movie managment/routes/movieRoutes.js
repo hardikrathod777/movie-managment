@@ -1,10 +1,9 @@
 const express = require('express');
-const router = express.Router(); // Define router
+const router = express.Router(); 
 const multer = require('multer');
 const path = require('path');
 const Movie = require('../models/movie');
 
-// Set up multer storage
 const storage = multer.diskStorage({
   destination: './uploads/',
   filename: function (req, file, cb) {
@@ -12,21 +11,17 @@ const storage = multer.diskStorage({
   }
 });
 
-// Initialize multer
 const upload = multer({ storage: storage }).single('poster');
 
-// GET all movies
 router.get('/movies', async (req, res) => {
-    const movies = await Movie.find(); // Fetch all movies from the database
-    res.render('index', { movies }); // Render the 'index.ejs' template with the list of movies
+    const movies = await Movie.find();
+    res.render('index', { movies }); 
   });
 
-// GET add movie form
 router.get('/movies/add', (req, res) => {
   res.render('addMovie');
 });
 
-// POST add new movie
 router.post('/movies', (req, res) => {
   upload(req, res, async (err) => {
     if (err) {
@@ -47,13 +42,11 @@ router.post('/movies', (req, res) => {
   });
 });
 
-// GET edit movie form
 router.get('/movies/edit/:id', async (req, res) => {
   const movie = await Movie.findById(req.params.id);
   res.render('editMovie', { movie });
 });
 
-// POST update movie
 router.post('/movies/edit/:id', (req, res) => {
   upload(req, res, async (err) => {
     if (err) {
@@ -72,10 +65,9 @@ router.post('/movies/edit/:id', (req, res) => {
   });
 });
 
-// GET delete movie
 router.get('/movies/delete/:id', async (req, res) => {
   await Movie.findByIdAndDelete(req.params.id);
   res.redirect('/movies');
 });
 
-module.exports = router; // Export the router
+module.exports = router; 
