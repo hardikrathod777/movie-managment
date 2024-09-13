@@ -1,9 +1,47 @@
-<% movies.forEach(movie => { %>
-    <div>
-        <h2><%= movie.title %></h2>
-        <p><%= movie.description %></p>
-        <img src="/uploads/<%= movie.poster %>" alt="Movie Poster">
-        <a href="/movies/edit/<%= movie._id %>">Edit</a>
-        <a href="/movies/delete/<%= movie._id %>">Delete</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .movie-card {
+            margin-bottom: 20px;
+        }
+        .movie-poster {
+            max-height: 461px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Movies List</h1>
+        <div class="mb-4">
+            <a href="/movies/add" class="btn btn-success">Add Movie</a>
+        </div>
+        <div class="row">
+            <% movies.forEach(movie => { %>
+                <div class="col-md-4">
+                    <div class="card movie-card">
+                        <img src="/uploads/<%= movie.poster %>" class="card-img-top movie-poster" alt="<%= movie.title %>">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= movie.title %></h5>
+                            <p class="card-text"><%= movie.description %></p>
+                            <a href="/movies/edit/<%= movie._id %>" class="btn btn-primary">Edit</a>
+                            <a href="/movies/delete/<%= movie._id %>" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
     </div>
-<% }) %>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
