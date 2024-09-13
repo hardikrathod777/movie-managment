@@ -1,19 +1,20 @@
 const express = require('express');
 const movieRoutes = require('./routes/movieRoutes'); // Import movie routes
+const connectDB = require('./config/db'); // Import your db.js file
 
 const app = express();
+
+connectDB(); 
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use('/uploads', express.static('uploads'));
 
-// Use movie routes
 app.use(movieRoutes);
 
-// Handle root route
 app.get('/', (req, res) => {
-  res.redirect('/movies'); // Redirect to the movies list page
+  res.redirect('/movies'); 
 });
 
 app.listen(3000, () => {
